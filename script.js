@@ -16,19 +16,42 @@ var db = firebase.firestore();
 // 2. Page Switching Logic
 function showPage(pageId) {
     const sections = ['auth-box', 'dashboard', 'rules-section', 'how-to-section'];
+    
+    // 1. Saare sections hide karein
     sections.forEach(id => {
         const el = document.getElementById(id);
         if (el) el.classList.add('hidden');
     });
 
+    // 2. Logic to show the correct page
     if (pageId === 'home') {
         const user = localStorage.getItem('currentUser');
-        if (user) document.getElementById('dashboard').classList.remove('hidden');
-        else document.getElementById('auth-box').classList.remove('hidden');
+        const targetId = user ? 'dashboard' : 'auth-box';
+        const target = document.getElementById(targetId);
+        if (target) target.classList.remove('hidden');
     } else {
         const target = document.getElementById(pageId);
         if (target) target.classList.remove('hidden');
     }
+
+    // 3. IMPORTANT: Switch hone ke baad page ko scroll karke top par le jayein
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    // 4. Navigation Buttons ki "Active" class update karein
+    updateNavButtons(pageId);
+}
+
+// Navigation buttons ko highlight karne wala function
+function updateNavButtons(activePage) {
+    const navButtons = document.querySelectorAll('.nav-btn');
+    navButtons.forEach(btn => {
+        btn.classList.remove('active'); // Pehle sab se active class hataein
+        
+        // Agar button ka onclick function matches the pageId, usay active kar dein
+        if (btn.getAttribute('onclick').includes(activePage)) {
+            btn.classList.add('active');
+        }
+    });
 }
 
 // 3. Login Function (With Fingerprint & IP Lock)
