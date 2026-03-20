@@ -147,91 +147,83 @@ if(document.getElementById('ref-id-share')) {
 }
 
 // 5. Watch Ad (Earning + Reward Logic)
-let adTimer;
-let timeLeft = 30;
+let adTimer = null;
+let canClaim = false; // Security check
 
 function watchVideoAd() {
     const modal = document.getElementById('ad-modal');
-    const timerDisplay = document.getElementById('timer-container');
+    const timerText = document.getElementById('timer-container');
     const adFrame = document.getElementById('ad-frame');
     const claimBtn = document.getElementById('claim-btn');
-    const statusText = document.getElementById('ad-status');
+    const phone = localStorage.getItem('currentUser');
 
-    // 1. Aapka Adsterra Smart Link
-    const myAdLink = "https://www.profitablecpmratenetwork.com/d63nmprev5?key=b25985fa1a9981263d77b7b9b7cf2468";
+    if (!phone) return alert("Please Login First!");
 
-    // 2. Setup UI
-    timeLeft = 30;
-    timerDisplay.innerText = timeLeft;
-    claimBtn.classList.add('hidden');
-    statusText.innerText = "Keep this page open to earn Rs. 15";
+    // 1. Reset everything
+    clearInterval(adTimer);
+    canClaim = false;
+    let sec = 30;
+    
+    timerText.innerText = sec;
+    claimBtn.classList.add('hidden'); // Button chupa dein
     modal.classList.remove('hidden');
     modal.classList.add('flex');
-    
-    // 3. Load Ad in Iframe
+
+    // 2. Load Ad
+    const myAdLink = "https://www.profitablecpmratenetwork.com/d63nmprev5?key=b25985fa1a9981263d77b7b9b7cf2468";
     adFrame.src = myAdLink;
 
-    // 4. Start Timer
-    if(adTimer) clearInterval(adTimer);
+    // 3. Timer Start
     adTimer = setInterval(() => {
-        // Anti-Cheat: Agar user tab switch kare to timer rok do
         if (!document.hidden) {
-            timeLeft--;
-            timerDisplay.innerText = timeLeft;
+            sec--;
+            timerText.innerText = sec;
 
-            if (timeLeft <= 0) {
+            if (sec <= 0) {
                 clearInterval(adTimer);
-                timerDisplay.innerHTML = '<i class="fas fa-check"></i>';
-                statusText.innerText = "Mission Accomplished!";
-                claimBtn.classList.remove('hidden'); // 30s ke baad button show
+                canClaim = true; // Ab user claim kar sakta hai
+                timerText.innerText = "✓";
+                claimBtn.classList.remove('hidden'); // Button show karein
             }
-        } else {
-            statusText.innerText = "⚠️ Timer Paused! Come back to earn.";
         }
     }, 1000);
 }
 
 function claimReward() {
+    // SECURITY: Agar 30s se pehle koi hoshiyari kare
+    if (!canClaim) return;
+
     const phone = localStorage.getItem('currentUser');
-    const claimBtn = document.getElementById('claim-btn');
     const modal = document.getElementById('ad-modal');
+    const claimBtn = document.getElementById('claim-btn');
     const adFrame = document.getElementById('ad-frame');
 
-    if (!phone) return;
-
-    // 1. Button ko foran disable karein (Double-click Prevention)
+    // 1. Double click lock
+    canClaim = false; 
     claimBtn.disabled = true;
-    claimBtn.innerText = "PROCESSING...";
-    claimBtn.classList.add('opacity-50', 'cursor-not-allowed');
+    claimBtn.innerText = "UPDATING...";
 
     // 2. Firebase Update
     db.collection("users").doc(phone).update({
         balance: firebase.firestore.FieldValue.increment(15)
     }).then(() => {
-        // 3. UI Update (Dashboard refresh)
-        if (typeof loadUserData === "function") {
-            loadUserData(phone); 
-        }
-
-        // 4. Modal Clean-up & Redirect
-        modal.classList.add('hidden');
+        // 3. Sab kuch saaf (Cleanup)
+        adFrame.src = ""; // Ad band
+        modal.classList.add('hidden'); // Modal khatam
         modal.classList.remove('flex');
-        adFrame.src = ""; // Ad stop karne ke liye
         
-        // 5. Reset button for next time
-        claimBtn.disabled = false;
-        claimBtn.innerText = "Claim Now";
-        claimBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+        // 4. Dashboard Refresh
+        loadUserData(phone); 
 
-        alert("🎉 Mubarak! Rs. 15 add ho gaye hain. Aap Dashboard par wapas aa gaye hain.");
+        // 5. Success Message & Redirect
+        alert("🎉 Mubarak! Rs. 15 add ho gaye. Aap dashboard par redirect ho chuke hain.");
         
-        // Auto-scroll to Dashboard (Optional)
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-
-    }).catch((error) => {
-        console.error("Error updating balance: ", error);
-        alert("Server error! Please try again.");
+        // Agar aap chahte hain dashboard section par auto-scroll ho jaye
+        showPage('dashboard'); 
+    }).catch((err) => {
+        console.error(err);
         claimBtn.disabled = false;
+        canClaim = true;
     });
 }
 // 6. Withdraw, Share & Utilities
