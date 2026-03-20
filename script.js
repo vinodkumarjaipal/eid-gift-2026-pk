@@ -102,7 +102,13 @@ async function loadUserData(phone) {
             const data = doc.data();
             document.getElementById('balance').innerText = data.balance || 0;
             document.getElementById('invites').innerText = data.invites || 0;
-            document.getElementById('ref-id').innerText = data.phone;
+            // Dono jagah referral ID show karne ke liye
+if(document.getElementById('ref-id-dashboard')) {
+    document.getElementById('ref-id-dashboard').innerText = userReferralID;
+}
+if(document.getElementById('ref-id-share')) {
+    document.getElementById('ref-id-share').innerText = userReferralID;
+}
 
             const prog = Math.min((data.balance / 2000) * 100, 100);
             document.getElementById('progress').style.width = prog + "%";
