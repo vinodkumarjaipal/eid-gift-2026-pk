@@ -182,40 +182,56 @@ body {
 
 /* 9. Responsive Adjustments */
 @media (max-width: 768px) {
-    /* Header ko Top Ad se thora neche karne ke liye */
+    /* 1. Header adjustment */
     header {
-        margin-top: 20px;
-        padding-top: 10px;
+        margin-top: 10px;
+        padding-top: 5px;
     }
 
-    /* Main container ki padding barha di taake Nav Bar content ko block na kare */
+    /* 2. Main Container Padding (Kam kar di taake space bache) */
     .max-w-md {
-        padding-bottom: 120px !important; 
+        padding-bottom: 80px !important; 
     }
 
-    /* Mobile Ads ko 'Fixed' se 'Relative' kiya taake wo screen par chipke na rahein */
+    /* 3. Navigation Bar (Slim & Sleek) */
+    nav.fixed {
+        height: 60px !important; /* Fixed choti height */
+        padding: 5px 10px !important;
+        z-index: 1000 !important;
+        background: rgba(0, 0, 0, 0.85) !important;
+        backdrop-filter: blur(15px);
+        display: flex;
+        align-items: center;
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    /* 4. Nav Buttons Compact Style */
+    .nav-btn {
+        gap: 2px !important;
+        flex: 1;
+    }
+
+    .nav-btn i {
+        font-size: 1.1rem !important; /* Icon size chota */
+    }
+
+    .nav-btn span {
+        font-size: 10px !important; /* Text chota aur barik */
+        font-weight: 500;
+        letter-spacing: 0.3px;
+    }
+
+    /* 5. Sections Space */
+    #dashboard, #rules-section, #how-to-section {
+        margin-top: 5px;
+        padding-bottom: 20px;
+    }
+
+    /* 6. Ad Units Fix */
     .md\:hidden.fixed {
         position: relative !important;
-        top: 0 !important;
-        bottom: 0 !important;
-        width: 100% !important;
-        z-index: 10;
-        margin-bottom: 15px;
-        /* Agar background black rakhna hai to: */
-        background: rgba(0,0,0,0.5); 
-    }
-
-    /* Dashboard aur sections ke liye specific space */
-    #dashboard, #rules-section, #how-to-section {
-        padding-bottom: 80px; 
-        margin-top: 10px;
-    }
-
-    /* Navigation Bar ko hamesha sab se upar rakhne ke liye */
-    nav.fixed {
-        z-index: 999 !important;
-        background: rgba(0, 0, 0, 0.9) !important; /* Thora dark taake content peeche blur ho jaye */
-        backdrop-filter: blur(15px);
+        margin-bottom: 10px;
+        background: rgba(0,0,0,0.3);
     }
 }
 @media (max-width: 1200px) {
