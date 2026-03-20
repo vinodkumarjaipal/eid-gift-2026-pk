@@ -208,3 +208,9 @@ body {
     color: rgba(255, 255, 255, 0.1);
     font-weight: bold;
 }
+@media (min-width: 1280px) {
+    .dashboard-container { /* Jo bhi aapka main content div hai */
+        max-width: 1000px;
+        margin: 0 auto;
+    }
+}
