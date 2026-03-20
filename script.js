@@ -146,40 +146,55 @@ if(document.getElementById('ref-id-share')) {
     } catch (e) { console.error(e); }
 }
 
-// 5. Watch Ad (With Tab-Pause Logic)
-let isTabActive = true;
-document.addEventListener("visibilitychange", () => {
-    isTabActive = !document.hidden;
-});
-
+// 5. Watch Ad (Earning + Reward Logic)
 function watchVideoAd() {
     const modal = document.getElementById('ad-modal');
     const timerText = document.getElementById('timer');
-    modal.classList.remove('hidden');
+    const phone = localStorage.getItem('currentUser');
 
+    if (!phone) {
+        alert("Pehle login karein!");
+        return;
+    }
+
+    // 1. Aapka Adsterra Smart Link
+    const myAdLink = "https://www.profitablecpmratenetwork.com/d63nmprev5?key=b25985fa1a9981263d77b7b9b7cf2468";
+
+    // 2. Ad naye tab mein kholna (Must for Earning)
+    window.open(myAdLink, '_blank');
+
+    // 3. UI Show karein
+    modal.classList.remove('hidden');
+    modal.classList.add('flex'); // Ensure flex is added if using tailwind
+    
     let sec = 30;
+    timerText.innerText = sec;
+
+    // 4. Timer Start (No pause logic, let them wait on your site)
     const interval = setInterval(() => {
-        if (isTabActive) {
-            sec--;
-            timerText.innerText = sec;
-        }
+        sec--;
+        timerText.innerText = sec;
 
         if (sec <= 0) {
             clearInterval(interval);
+            
+            // Modal hide karein
             modal.classList.add('hidden');
+            modal.classList.remove('flex');
             timerText.innerText = "30";
 
-            const phone = localStorage.getItem('currentUser');
+            // 5. Firebase mein paise add karein (Rs. 15)
             db.collection("users").doc(phone).update({
                 balance: firebase.firestore.FieldValue.increment(15)
             }).then(() => {
-                loadUserData(phone);
-                alert("Mubarak! Rs. 15 add ho gaye.");
+                loadUserData(phone); // UI update karein
+                alert("🎉 Mubarak! Ad dekhne par Rs. 15 add kar diye gaye hain.");
+            }).catch((error) => {
+                console.error("Error updating balance: ", error);
             });
         }
     }, 1000);
 }
-
 // 6. Withdraw, Share & Utilities
 function share(platform) {
     const phone = localStorage.getItem('currentUser');
