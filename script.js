@@ -193,16 +193,45 @@ function watchVideoAd() {
 
 function claimReward() {
     const phone = localStorage.getItem('currentUser');
-    if(!phone) return;
+    const claimBtn = document.getElementById('claim-btn');
+    const modal = document.getElementById('ad-modal');
+    const adFrame = document.getElementById('ad-frame');
 
-    // Firebase Update
+    if (!phone) return;
+
+    // 1. Button ko foran disable karein (Double-click Prevention)
+    claimBtn.disabled = true;
+    claimBtn.innerText = "PROCESSING...";
+    claimBtn.classList.add('opacity-50', 'cursor-not-allowed');
+
+    // 2. Firebase Update
     db.collection("users").doc(phone).update({
         balance: firebase.firestore.FieldValue.increment(15)
     }).then(() => {
-        loadUserData(phone); // Dashboard refresh
-        document.getElementById('ad-modal').classList.add('hidden');
-        document.getElementById('ad-frame').src = ""; // Clear frame
-        alert("🎉 Mubarak! Rs. 15 aapke account mein add ho gaye.");
+        // 3. UI Update (Dashboard refresh)
+        if (typeof loadUserData === "function") {
+            loadUserData(phone); 
+        }
+
+        // 4. Modal Clean-up & Redirect
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        adFrame.src = ""; // Ad stop karne ke liye
+        
+        // 5. Reset button for next time
+        claimBtn.disabled = false;
+        claimBtn.innerText = "Claim Now";
+        claimBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+
+        alert("🎉 Mubarak! Rs. 15 add ho gaye hain. Aap Dashboard par wapas aa gaye hain.");
+        
+        // Auto-scroll to Dashboard (Optional)
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+
+    }).catch((error) => {
+        console.error("Error updating balance: ", error);
+        alert("Server error! Please try again.");
+        claimBtn.disabled = false;
     });
 }
 // 6. Withdraw, Share & Utilities
