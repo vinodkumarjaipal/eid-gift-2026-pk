@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eid Mubarak | Mega Gift 2026</title>
+    <meta name="title" content="Eid Mubarak | Mega Gift 2026">
+    <meta name="description"
+        content="Is Eid hasil karein Rs. 2000 ka cash reward! Join karein hamari Eid Campaign 2026 aur doston ko invite karke earn karein.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aapki-site-ka-link.com/">
+    <meta property="og:title" content="🌙 Eid Mubarak! Rs. 2000 ka Gift Hasil Karein">
+    <meta property="og:description"
+        content="Maine apna reward claim kar liya hai, aap bhi jaldi register karein aur 2026 ka Eid Gift hasil karein!">
+    <meta property="og:image" content="https://aapki-site-ka-link.com/step1.png">
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:title" content="Eid Mubarak | Mega Gift 2026">
+    <meta property="twitter:description"
+        content="Is Eid hasil karein Rs. 2000 ka cash reward! Join karein hamari Eid Campaign 2026.">
+    <meta property="twitter:image" content="https://aapki-site-ka-link.com/step1.png">
+
+    <meta name="theme-color" content="#012622">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.10/firebase-firestore-compat.js"></script>
+    <link rel="stylesheet" href="style.css">
+</head>
+<div
+    class="hidden xl:block fixed left-4 top-1/2 -translate-y-1/2 w-[160px] h-[600px] bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+    <p class="text-[10px] text-center text-gray-600 mt-2 uppercase">Advertisement</p>
+</div>
+
+<div
+    class="hidden xl:block fixed right-4 top-1/2 -translate-y-1/2 w-[160px] h-[600px] bg-white/5 border border-white/10 rounded-xl overflow-hidden">
+    <p class="text-[10px] text-center text-gray-600 mt-2 uppercase">Advertisement</p>
+</div>
+
+<body class="bg-main text-white font-sans selection:bg-yellow-500 selection:text-black">
+
+    <div class="fixed top-0 left-0 w-full h-full overflow-hidden -z-10">
+        <div class="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-yellow-600/20 blur-[120px] rounded-full"></div>
+        <div class="absolute bottom-[-10%] right-[-10%] w-[40%] h-[40%] bg-emerald-600/20 blur-[120px] rounded-full">
+        </div>
+    </div>
+
+    <div class="max-w-md mx-auto min-h-screen flex flex-col p-4 pb-24">
+
+        <header class="text-center py-8 animate-fade-in">
+            <div class="inline-block p-3 rounded-2xl bg-white/5 border border-white/10 mb-4">
+                <i class="fas fa-moon text-3xl text-yellow-500"></i>
+            </div>
+            <h1
+                class="text-4xl font-black tracking-tighter bg-gradient-to-b from-yellow-300 to-yellow-600 bg-clip-text text-transparent uppercase">
+                Eid Gift 2026
+            </h1>
+            <p class="text-gray-400 text-xs tracking-[0.3em] uppercase mt-2">Ramadan Special Campaign</p>
+        </header>
+
+        <main class="flex-grow">
+            <section id="auth-box" class="glass-panel p-8 space-y-6 animate-slide-up">
+                <div class="text-center">
+                    <h2 class="text-xl font-bold">Welcome, Guest! 👋</h2>
+                    <p class="text-gray-400 text-sm">Apna account banayein aur eid reward hasil karein.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="relative">
+                        <i class="fas fa-user absolute left-4 top-4 text-gray-500"></i>
+                        <input type="text" id="name" placeholder="Full Name" class="input-field pl-12">
+                    </div>
+                    <div class="relative">
+                        <i class="fab fa-whatsapp absolute left-4 top-4 text-gray-500"></i>
+                        <input type="number" id="phone" placeholder="WhatsApp Number" class="input-field pl-12">
+                    </div>
+                    <button onclick="login()" class="btn-primary w-full shadow-lg shadow-yellow-600/20">
+                        Join Campaign <i class="fas fa-arrow-right ml-2 text-sm"></i>
+                    </button>
+                </div>
+            </section>
+
+            <section id="dashboard" class="hidden space-y-6 animate-fade-in">
+                <div class="glass-panel p-6 border-t-2 border-yellow-500 overflow-hidden relative">
+                    <div class="relative z-10">
+                        <p class="text-[10px] uppercase tracking-widest text-gray-400">Total Earnings</p>
+                        <h3 class="text-5xl font-black text-white mt-2">Rs. <span id="balance">0</span></h3>
+                        <div class="mt-4 flex items-center gap-2">
+                            <span
+                                class="px-2 py-1 bg-green-500/10 text-green-500 text-[10px] font-bold rounded uppercase">Verified
+                                Account</span>
+                        </div>
+                    </div>
+                    <i class="fas fa-coins absolute -right-4 -bottom-4 text-8xl opacity-5 rotate-12"></i>
+                </div>
+
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="glass-panel p-4 flex flex-col items-center justify-center">
+                        <p class="text-[10px] text-gray-400 uppercase">Invites</p>
+                        <p class="text-2xl font-black"><span id="invites">0</span><span
+                                class="text-sm text-gray-500">/20</span></p>
+                    </div>
+                    <div class="glass-panel p-4 flex flex-col items-center justify-center">
+                        <p class="text-[10px] text-gray-400 uppercase">Referral ID</p>
+                        <p id="ref-id" class="text-xs font-mono text-yellow-500">---</p>
+                    </div>
+                </div>
+
+                <div class="glass-panel p-5 space-y-3">
+                    <div class="flex justify-between items-end">
+                        <p class="text-xs font-bold uppercase tracking-tight">Withdrawal Goal</p>
+                        <p class="text-[10px] text-yellow-500 font-mono">Target: Rs. 2000</p>
+                    </div>
+                    <div class="h-3 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+                        <div id="progress"
+                            class="h-full bg-gradient-to-r from-yellow-600 to-yellow-400 transition-all duration-1000 shadow-[0_0_15px_rgba(234,179,8,0.3)]"
+                            style="width: 0%"></div>
+                    </div>
+                </div>
+
+                <div class="space-y-4">
+                    <button id="withdraw-btn" onclick="withdraw()" disabled
+                        class="btn-disabled w-full py-4 uppercase tracking-widest text-sm font-black">
+                        Withdraw Funds <i class="fas fa-lock ml-2 opacity-50"></i>
+                    </button>
+
+                    <div class="p-6 bg-yellow-500/5 rounded-[2rem] border border-yellow-500/10 space-y-4 text-center">
+                        <h4 class="text-xs font-bold uppercase text-yellow-500">Fast Earning Methods</h4>
+                        <div class="grid grid-cols-2 gap-3">
+
+                            <button onclick="watchVideoAd()" class="task-card">
+                                <i class="fas fa-play text-yellow-500 mb-1"></i>
+                                <span>Watch Ad</span>
+                            </button>
+                            <div class="glass-panel p-4 flex flex-col items-center justify-center relative">
+                                <p class="text-[10px] text-gray-400 uppercase">Referral ID</p>
+                                <div class="flex items-center gap-2">
+                                    <p id="ref-id" class="text-xs font-mono text-yellow-500">---</p>
+                                    <button onclick="copyLink()"
+                                        class="text-yellow-500/50 hover:text-yellow-500 transition-all">
+                                        <i class="fas fa-copy text-sm"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 pt-2">
+                            <button onclick="share('wa')"
+                                class="flex-1 py-3 bg-[#25D366] rounded-xl text-black font-bold"><i
+                                    class="fab fa-whatsapp text-lg"></i></button>
+                            <button onclick="share('fb')"
+                                class="flex-1 py-3 bg-[#1877F2] rounded-xl text-white font-bold"><i
+                                    class="fab fa-facebook-f text-lg"></i></button>
+                        </div>
+
+                    </div>
+                </div>
+            </section>
+
+            <section id="rules-section" class="hidden animate-slide-up pb-10">
+                <div class="glass-panel p-8 space-y-6">
+                    <h3 class="text-2xl font-black text-yellow-500 border-b border-white/10 pb-4 italic">OFFICIAL RULES
+                    </h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4">
+                            <div
+                                class="w-8 h-8 shrink-0 bg-yellow-500 text-black rounded-lg flex items-center justify-center font-bold">
+                                01</div>
+                            <p class="text-sm text-gray-300">Ek device par sirf aik account allowed hai. Duplicate
+                                accounts permanent ban ho jayenge.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="w-8 h-8 shrink-0 bg-yellow-500 text-black rounded-lg flex items-center justify-center font-bold">
+                                02</div>
+                            <p class="text-sm text-gray-300">Fake referrals ya script use karne par withdrawal reject
+                                kar di jayegi.</p>
+                        </div>
+                        <div class="flex gap-4">
+                            <div
+                                class="w-8 h-8 shrink-0 bg-yellow-500 text-black rounded-lg flex items-center justify-center font-bold">
+                                03</div>
+                            <p class="text-sm text-gray-300">Reward hasil karne ke liye 20 real invites aur Rs. 2000 ka
+                                balance hona lazmi hai.</p>
+                        </div>
+                    </div>
+                    <button onclick="location.reload()"
+                        class="w-full py-3 border border-white/10 rounded-xl text-xs font-bold opacity-50">Back to
+                        Dashboard</button>
+                </div>
+            </section>
+
+            <section id="how-to-section" class="hidden animate-slide-up pb-10">
+                <div class="space-y-6">
+                    <h3 class="text-2xl font-black text-center text-yellow-500 italic uppercase">How to Use</h3>
+
+                    <div class="glass-panel p-4 space-y-3">
+                        <div class="h-48 bg-gray-900 rounded-xl overflow-hidden border border-white/5">
+                            <img src="step1.png" class="w-full h-full object-cover opacity-80" alt="Login Step">
+                        </div>
+                        <p class="text-center font-bold text-sm">Step 1: Correct information se register karein.</p>
+                    </div>
+
+                    <div class="glass-panel p-4 space-y-3">
+                        <div class="h-48 bg-gray-900 rounded-xl overflow-hidden border border-white/5">
+                            <img src="step2.png" class="w-full h-full object-cover opacity-80" alt="Invite Step">
+                        </div>
+                        <p class="text-center font-bold text-sm">Step 2: Apna referral link doston ke sath share karein.
+                        </p>
+
+                        <p>Aur ads dekhein.</p>
+                    </div>
+                    <div class="glass-panel p-4 space-y-3">
+                        <div class="h-48 bg-gray-900 rounded-xl overflow-hidden border border-white/5">
+                            <img src="step3.png" class="w-full h-full object-cover opacity-80" alt="Withdraw Step">
+                        </div>
+                        <p class="text-center font-bold text-sm">Step 3: Jab target complete ho jaye, withdrawal request
+                            submit karein.</p>
+                    </div>
+                    <div class="glass-panel p-4 space-y-3">
+                        <div class="h-48 bg-gray-900 rounded-xl overflow-hidden border border-white/5">
+                            <img src="step4.png" class="w-full h-full object-cover opacity-80" alt="Enjoy Step">
+                        </div>
+                        <p class="text-center font-bold text-sm">Step 4: Apni payment method select karein aur details
+                            fill karein.</p>
+                        <p class="text-center font-bold text-sm">Step 5: Apne rewards enjoy karein! Eid Mubarak! 🎉</p>
+                    </div>
+                </div>
+                <br>
+                <button onclick="location.reload()"
+                    class="w-full py-3 border border-white/10 rounded-xl text-xs font-bold opacity-50">I
+                    Understand</button>
+    </div>
+    </section>
+    </main>
+    <div
+        class="md:hidden fixed top-0 left-0 w-full h-[60px] bg-black/80 backdrop-blur-sm border-b border-white/10 z-[100] flex items-center justify-center">
+        <span class="text-[9px] text-gray-600 uppercase">Top Ad Space</span>
+    </div>
+
+    <div
+        class="md:hidden fixed bottom-[72px] left-0 w-full h-[50px] bg-black/80 backdrop-blur-sm border-t border-white/10 z-[40] flex items-center justify-center">
+        <span class="text-[9px] text-gray-600 uppercase">Bottom Ad Space</span>
+    </div>
+    <nav class="fixed bottom-0 left-0 w-full bg-black/40 backdrop-blur-2xl border-t border-white/10 py-4 px-8 z-50">
+        <div class="max-w-md mx-auto flex justify-around items-center">
+            <button onclick="location.reload()" class="nav-btn active">
+                <i class="fas fa-house"></i>
+                <span>Home</span>
+            </button>
+            <button onclick="showPage('how-to-section')" class="nav-btn">
+                <i class="fas fa-book-open"></i>
+                <span>Guide</span>
+            </button>
+            <button onclick="showPage('rules-section')" class="nav-btn">
+                <i class="fas fa-shield-halved"></i>
+                <span>Rules</span>
+            </button>
+        </div>
+    </nav>
+
+    </div>
+
+    <div id="ad-modal" class="modal-overlay hidden">
+        <div class="text-center">
+            <div
+                class="w-24 h-24 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mx-auto mb-4">
+            </div>
+            <div id="timer" class="text-4xl font-black mb-2">30</div>
+            <p class="text-sm uppercase tracking-widest opacity-60">Reward Loading...</p>
+        </div>
+    </div>
+
+    <div id="withdraw-modal" class="modal-overlay hidden">
+        <div class="glass-panel p-8 w-[90%] max-w-sm space-y-5 border-yellow-500/30">
+            <h3 class="text-xl font-bold text-yellow-500 uppercase tracking-tight">Withdrawal Form</h3>
+            <select id="method" class="input-field bg-black/40">
+                <option>EasyPaisa</option>
+                <option>JazzCash</option>
+            </select>
+            <input type="text" id="acc-name" placeholder="Account Name" class="input-field">
+            <input type="number" id="acc-num" placeholder="Account Number" class="input-field">
+            <div class="flex gap-2">
+                <button onclick="submitWithdrawRequest()" class="btn-primary flex-grow">Submit</button>
+                <button onclick="closeWithdraw()"
+                    class="px-6 py-3 bg-red-500/10 text-red-500 rounded-2xl font-bold">X</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
