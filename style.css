@@ -214,3 +214,41 @@ body {
         margin: 0 auto;
     }
 }
+/* Ads Container ko responsive banane ke liye */
+iframe {
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* Glass panel effects (jo aapne HTML mein use kiye hain) */
+.glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 1.5rem;
+}
+
+/* Input fields focus style */
+.input-field {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 12px 16px;
+    border-radius: 12px;
+    outline: none;
+    transition: all 0.3s;
+}
+
+.input-field:focus {
+    border-color: #eab308; /* Yellow-500 */
+    box-shadow: 0 0 10px rgba(234, 179, 8, 0.1);
+}
+
+/* Mobile par ads ki padding manage karne ke liye */
+@media (max-width: 768px) {
+    .xl\:hidden {
+        display: flex !important;
+        justify-content: center;
+        margin-bottom: 1.5rem;
+    }
+}
