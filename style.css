@@ -182,56 +182,58 @@ body {
 
 /* 9. Responsive Adjustments */
 @media (max-width: 768px) {
-    /* 1. Header adjustment */
-    header {
-        margin-top: 10px;
-        padding-top: 5px;
-    }
-
-    /* 2. Main Container Padding (Kam kar di taake space bache) */
-    .max-w-md {
-        padding-bottom: 80px !important; 
-    }
-
-    /* 3. Navigation Bar (Slim & Sleek) */
+    /* 1. Navigation Bar (Container Fix) */
     nav.fixed {
-        height: 60px !important; /* Fixed choti height */
-        padding: 5px 10px !important;
+        height: 65px !important; /* Thori height barhai taake icons fit aayein */
+        padding: 0 !important; /* Extra padding khatam */
+        display: flex !important;
+        align-items: center !important; /* Vertically Center */
+        justify-content: center !important;
+        bottom: 0 !important;
+        left: 0 !important;
+        width: 100% !important;
+        background: rgba(0, 0, 0, 0.95) !important;
         z-index: 1000 !important;
-        background: rgba(0, 0, 0, 0.85) !important;
-        backdrop-filter: blur(15px);
-        display: flex;
-        align-items: center;
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    /* 4. Nav Buttons Compact Style */
+    /* 2. Buttons Container (Inner Alignment) */
+    nav.fixed > div {
+        display: flex !important;
+        width: 100% !important;
+        height: 100% !important;
+        align-items: center !important;
+        justify-content: space-around !important;
+    }
+
+    /* 3. Individual Nav Buttons */
     .nav-btn {
-        gap: 2px !important;
-        flex: 1;
+        display: flex !important;
+        flex-direction: column !important;
+        align-items: center !important;
+        justify-content: center !important;
+        height: 100% !important; /* Button poori height le */
+        padding: 5px 0 !important;
+        margin: 0 !important;
+        border: none !important;
+        background: transparent !important;
+        color: rgba(255, 255, 255, 0.5);
     }
 
+    /* 4. Icon & Text Size */
     .nav-btn i {
-        font-size: 1.1rem !important; /* Icon size chota */
+        font-size: 1.2rem !important; /* Icon size */
+        margin-bottom: 2px !important;
     }
 
     .nav-btn span {
-        font-size: 10px !important; /* Text chota aur barik */
-        font-weight: 500;
-        letter-spacing: 0.3px;
+        font-size: 10px !important; /* Text size */
+        line-height: 1 !important;
+        display: block !important;
     }
 
-    /* 5. Sections Space */
-    #dashboard, #rules-section, #how-to-section {
-        margin-top: 5px;
-        padding-bottom: 20px;
-    }
-
-    /* 6. Ad Units Fix */
-    .md\:hidden.fixed {
-        position: relative !important;
-        margin-bottom: 10px;
-        background: rgba(0,0,0,0.3);
+    /* Active State for Icons */
+    .nav-btn.active {
+        color: var(--accent) !important;
     }
 }
 @media (max-width: 1200px) {
