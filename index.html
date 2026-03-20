@@ -213,13 +213,32 @@
         </nav>
     </div>
 
-    <div id="ad-modal" class="modal-overlay hidden">
-        <div class="text-center">
-            <div class="w-24 h-24 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-            <div id="timer" class="text-4xl font-black mb-2">30</div>
-            <p class="text-sm uppercase tracking-widest opacity-60">Reward Loading...</p>
+  <div id="ad-modal" class="modal-overlay hidden fixed inset-0 z-[2000] bg-black flex-col">
+    <div class="w-full bg-[#012622] p-4 flex justify-between items-center border-b border-white/10 shadow-xl">
+        <div class="flex items-center gap-4">
+            <div id="timer-container" class="w-12 h-12 border-4 border-yellow-500 rounded-full flex items-center justify-center font-black text-yellow-500 text-xl shadow-[0_0_15px_rgba(241,179,11,0.3)]">
+                30
+            </div>
+            <div>
+                <p class="text-[10px] text-yellow-500 uppercase tracking-[0.2em] font-bold">Reward Mission</p>
+                <p id="ad-status" class="text-xs text-gray-400">Keep this page open to earn Rs. 15</p>
+            </div>
         </div>
+        <button id="claim-btn" onclick="claimReward()" class="hidden px-6 py-2 bg-gradient-to-r from-green-500 to-emerald-600 text-white rounded-xl font-black text-xs uppercase tracking-widest animate-pulse">
+            Claim Now <i class="fas fa-check-circle ml-1"></i>
+        </button>
     </div>
+
+    <div class="flex-grow w-full bg-white relative">
+        <div id="ad-loader" class="absolute inset-0 flex items-center justify-center bg-black/80 z-10">
+            <div class="text-center">
+                <div class="w-10 h-10 border-4 border-yellow-500 border-t-transparent rounded-full animate-spin mx-auto mb-2"></div>
+                <p class="text-[10px] uppercase text-gray-500">Loading Secure Ad...</p>
+            </div>
+        </div>
+        <iframe id="ad-frame" src="" class="w-full h-full border-none" onload="document.getElementById('ad-loader').style.display='none'"></iframe>
+    </div>
+</div>
 
     <div id="withdraw-modal" class="modal-overlay hidden">
         <div class="glass-panel p-8 w-[90%] max-w-sm space-y-5 border-yellow-500/30">
