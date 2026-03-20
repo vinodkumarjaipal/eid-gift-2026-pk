@@ -7,7 +7,7 @@
 ---
 
 ## 🚀 Live Demo
-🔗 **[Click Here to View Live Site](https://your-netlify-link-here.com)**
+🔗 **[Click Here to View Live Site](https://eid-gift-2026.netlify.app/)**
 *(Note: Replace this link after deploying to Netlify)*
 
 ---
