@@ -275,10 +275,60 @@ iframe {
     justify-content: center;
     background: rgba(0,0,0,0.9);
 }
+
+/* --- Reward Ad Specific Styles --- */
+
+/* Ad Modal ko screen ke beech mein laane ke liye */
+#ad-modal.flex {
+    display: flex !important;
+    position: fixed;
+    inset: 0;
+    z-index: 2000; /* Sabse upar */
+    background: rgba(0, 0, 0, 0.95);
+    backdrop-filter: blur(20px);
+}
+
+/* Timer Circle Animation (Optional but Cool) */
+.timer-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 4px solid rgba(241, 179, 11, 0.1);
+    border-radius: 50%;
+    margin-bottom: 20px;
+}
+
 #timer {
-    font-size: 3rem;
+    font-size: 4rem;
     font-weight: 900;
-    color: #F1B30B;
+    color: var(--accent);
+    text-shadow: 0 0 30px rgba(241, 179, 11, 0.4);
+    font-family: 'Monospace', sans-serif;
+}
+
+/* Status Text (PAUSED ya WAIT ke liye) */
+.ad-status-text {
+    font-size: 0.75rem;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(255, 255, 255, 0.5);
+    margin-top: 10px;
+}
+
+/* Button Pulse effect jab timer khatam ho */
+.btn-claim {
+    background: var(--success);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+    animation: pulse-green 2s infinite;
+}
+
+@keyframes pulse-green {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+    100% { transform: scale(1); }
 }
 /* Mobile par ads ki padding manage karne ke liye */
 
