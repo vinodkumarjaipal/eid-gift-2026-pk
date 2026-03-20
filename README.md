@@ -28,7 +28,7 @@ Follow these simple steps to start earning:
 
 | Step 1: Register | Step 2: Earn | Step 3: Withdraw |
 | :---: | :---: | :---: |
-| ![Register](step1.png) |![Dashoard](step2.png) |  ![Earn](step3.png) | ![Withdraw](step4.png) |
+| ![Register](step1.png) ![Earn](step3.png) | ![Withdraw](step4.png) |
 | Create account with your WhatsApp number. | Watch ads and invite friends to increase balance. | Reach Rs. 2000 and 20 invites to withdraw. |
 
 ---
