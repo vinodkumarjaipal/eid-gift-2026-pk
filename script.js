@@ -147,53 +147,64 @@ if(document.getElementById('ref-id-share')) {
 }
 
 // 5. Watch Ad (Earning + Reward Logic)
+let adWindow = null;
+let adTimer = null;
+
 function watchVideoAd() {
     const modal = document.getElementById('ad-modal');
     const timerText = document.getElementById('timer');
     const phone = localStorage.getItem('currentUser');
 
-    if (!phone) {
-        alert("Pehle login karein!");
-        return;
-    }
+    if (!phone) return alert("Please Login!");
 
-    // 1. Aapka Adsterra Smart Link
+    // 1. Adsterra Smart Link
     const myAdLink = "https://www.profitablecpmratenetwork.com/d63nmprev5?key=b25985fa1a9981263d77b7b9b7cf2468";
 
-    // 2. Ad naye tab mein kholna (Must for Earning)
-    window.open(myAdLink, '_blank');
-
-    // 3. UI Show karein
-    modal.classList.remove('hidden');
-    modal.classList.add('flex'); // Ensure flex is added if using tailwind
+    // 2. Choti Popup Window kholna (Naya Tab nahi)
+    const width = 400, height = 600;
+    const left = (window.innerWidth / 2) - (width / 2);
+    const top = (window.innerHeight / 2) - (height / 2);
     
+    adWindow = window.open(myAdLink, 'AdWindow', 
+        `width=${width},height=${height},top=${top},left=${left},scrollbars=yes`);
+
+    // 3. UI Reset
     let sec = 30;
     timerText.innerText = sec;
+    modal.classList.remove('hidden');
+    modal.classList.add('flex');
 
-    // 4. Timer Start (No pause logic, let them wait on your site)
-    const interval = setInterval(() => {
+    // 4. Timer Logic
+    if (adTimer) clearInterval(adTimer);
+    
+    adTimer = setInterval(() => {
+        // Check karein ke user ne ad window band to nahi kar di
+        if (!adWindow || adWindow.closed) {
+            clearInterval(adTimer);
+            modal.classList.add('hidden');
+            alert("⚠️ Ad window band kar di gayi! Reward ke liye ad ko poora dekhein.");
+            return;
+        }
+
         sec--;
         timerText.innerText = sec;
 
         if (sec <= 0) {
-            clearInterval(interval);
-            
-            // Modal hide karein
-            modal.classList.add('hidden');
-            modal.classList.remove('flex');
-            timerText.innerText = "30";
-
-            // 5. Firebase mein paise add karein (Rs. 15)
-            db.collection("users").doc(phone).update({
-                balance: firebase.firestore.FieldValue.increment(15)
-            }).then(() => {
-                loadUserData(phone); // UI update karein
-                alert("🎉 Mubarak! Ad dekhne par Rs. 15 add kar diye gaye hain.");
-            }).catch((error) => {
-                console.error("Error updating balance: ", error);
-            });
+            clearInterval(adTimer);
+            adWindow.close(); // Ad window khud band ho jayegi
+            giveReward(phone);
         }
     }, 1000);
+}
+
+function giveReward(phone) {
+    db.collection("users").doc(phone).update({
+        balance: firebase.firestore.FieldValue.increment(15)
+    }).then(() => {
+        loadUserData(phone);
+        document.getElementById('ad-modal').classList.add('hidden');
+        alert("🎉 Mubarak! Rs. 15 aapke balance mein add kar diye gaye hain.");
+    });
 }
 // 6. Withdraw, Share & Utilities
 function share(platform) {
