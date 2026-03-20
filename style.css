@@ -182,17 +182,42 @@ body {
 
 /* 9. Responsive Adjustments */
 @media (max-width: 768px) {
+    /* Header ko Top Ad se thora neche karne ke liye */
     header {
-        margin-top: 40px;
+        margin-top: 20px;
+        padding-top: 10px;
     }
 
+    /* Main container ki padding barha di taake Nav Bar content ko block na kare */
     .max-w-md {
-        padding-bottom: 150px;
+        padding-bottom: 120px !important; 
     }
 
-    /* Space for nav + ads */
-}
+    /* Mobile Ads ko 'Fixed' se 'Relative' kiya taake wo screen par chipke na rahein */
+    .md\:hidden.fixed {
+        position: relative !important;
+        top: 0 !important;
+        bottom: 0 !important;
+        width: 100% !important;
+        z-index: 10;
+        margin-bottom: 15px;
+        /* Agar background black rakhna hai to: */
+        background: rgba(0,0,0,0.5); 
+    }
 
+    /* Dashboard aur sections ke liye specific space */
+    #dashboard, #rules-section, #how-to-section {
+        padding-bottom: 80px; 
+        margin-top: 10px;
+    }
+
+    /* Navigation Bar ko hamesha sab se upar rakhne ke liye */
+    nav.fixed {
+        z-index: 999 !important;
+        background: rgba(0, 0, 0, 0.9) !important; /* Thora dark taake content peeche blur ho jaye */
+        backdrop-filter: blur(15px);
+    }
+}
 @media (max-width: 1200px) {
     .xl\:block {
         display: none !important;
@@ -245,10 +270,4 @@ iframe {
 }
 
 /* Mobile par ads ki padding manage karne ke liye */
-@media (max-width: 768px) {
-    .xl\:hidden {
-        display: flex !important;
-        justify-content: center;
-        margin-bottom: 1.5rem;
-    }
-}
+
