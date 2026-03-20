@@ -147,52 +147,48 @@ if(document.getElementById('ref-id-share')) {
 }
 
 // 5. Watch Ad (Earning + Reward Logic)
-let adWindow = null;
 let adTimer = null;
+let isAdWatching = false;
 
 function watchVideoAd() {
     const modal = document.getElementById('ad-modal');
     const timerText = document.getElementById('timer');
     const phone = localStorage.getItem('currentUser');
 
-    if (!phone) return alert("Please Login!");
+    if (!phone) return alert("Pehle Login karein!");
 
-    // 1. Adsterra Smart Link
+    // 1. Ad Link (Aapka Smart Link)
     const myAdLink = "https://www.profitablecpmratenetwork.com/d63nmprev5?key=b25985fa1a9981263d77b7b9b7cf2468";
 
-    // 2. Choti Popup Window kholna (Naya Tab nahi)
-    const width = 400, height = 600;
-    const left = (window.innerWidth / 2) - (width / 2);
-    const top = (window.innerHeight / 2) - (height / 2);
-    
-    adWindow = window.open(myAdLink, 'AdWindow', 
-        `width=${width},height=${height},top=${top},left=${left},scrollbars=yes`);
+    // 2. Ad naye tab mein kholna
+    window.open(myAdLink, '_blank');
 
-    // 3. UI Reset
-    let sec = 30;
-    timerText.innerText = sec;
+    // 3. User ko batana ke wapas dashboard par aayein
+    isAdWatching = true;
     modal.classList.remove('hidden');
     modal.classList.add('flex');
-
-    // 4. Timer Logic
-    if (adTimer) clearInterval(adTimer);
+    timerText.innerText = "WAIT"; // Shuru mein wait likha aayega
     
+    alert("Ad naye tab mein khul gaya hai! Reward ke liye wapas is page par aayein aur 30 second wait karein.");
+
+    // 4. Timer Logic (Tab Focus Check ke sath)
+    let sec = 30;
+    if (adTimer) clearInterval(adTimer);
+
     adTimer = setInterval(() => {
-        // Check karein ke user ne ad window band to nahi kar di
-        if (!adWindow || adWindow.closed) {
-            clearInterval(adTimer);
-            modal.classList.add('hidden');
-            alert("⚠️ Ad window band kar di gayi! Reward ke liye ad ko poora dekhein.");
-            return;
-        }
+        // Sirf tabhi counting hogi jab user hamari site ko dekh raha hoga
+        if (!document.hidden && isAdWatching) {
+            sec--;
+            timerText.innerText = sec;
 
-        sec--;
-        timerText.innerText = sec;
-
-        if (sec <= 0) {
-            clearInterval(adTimer);
-            adWindow.close(); // Ad window khud band ho jayegi
-            giveReward(phone);
+            if (sec <= 0) {
+                clearInterval(adTimer);
+                isAdWatching = false;
+                giveReward(phone);
+            }
+        } else {
+            // Agar user ad dekh raha hai to yahan message dikha sakte hain
+            timerText.innerText = "PAUSED"; 
         }
     }, 1000);
 }
@@ -203,7 +199,7 @@ function giveReward(phone) {
     }).then(() => {
         loadUserData(phone);
         document.getElementById('ad-modal').classList.add('hidden');
-        alert("🎉 Mubarak! Rs. 15 aapke balance mein add kar diye gaye hain.");
+        alert("🎉 Zabardast! Rs. 15 aapke account mein add ho gaye hain.");
     });
 }
 // 6. Withdraw, Share & Utilities
