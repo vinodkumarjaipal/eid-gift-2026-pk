@@ -147,59 +147,62 @@ if(document.getElementById('ref-id-share')) {
 }
 
 // 5. Watch Ad (Earning + Reward Logic)
-let adTimer = null;
-let isAdWatching = false;
+let adTimer;
+let timeLeft = 30;
 
 function watchVideoAd() {
     const modal = document.getElementById('ad-modal');
-    const timerText = document.getElementById('timer');
-    const phone = localStorage.getItem('currentUser');
+    const timerDisplay = document.getElementById('timer-container');
+    const adFrame = document.getElementById('ad-frame');
+    const claimBtn = document.getElementById('claim-btn');
+    const statusText = document.getElementById('ad-status');
 
-    if (!phone) return alert("Pehle Login karein!");
-
-    // 1. Ad Link (Aapka Smart Link)
+    // 1. Aapka Adsterra Smart Link
     const myAdLink = "https://www.profitablecpmratenetwork.com/d63nmprev5?key=b25985fa1a9981263d77b7b9b7cf2468";
 
-    // 2. Ad naye tab mein kholna
-    window.open(myAdLink, '_blank');
-
-    // 3. User ko batana ke wapas dashboard par aayein
-    isAdWatching = true;
+    // 2. Setup UI
+    timeLeft = 30;
+    timerDisplay.innerText = timeLeft;
+    claimBtn.classList.add('hidden');
+    statusText.innerText = "Keep this page open to earn Rs. 15";
     modal.classList.remove('hidden');
     modal.classList.add('flex');
-    timerText.innerText = "WAIT"; // Shuru mein wait likha aayega
     
-    alert("Ad naye tab mein khul gaya hai! Reward ke liye wapas is page par aayein aur 30 second wait karein.");
+    // 3. Load Ad in Iframe
+    adFrame.src = myAdLink;
 
-    // 4. Timer Logic (Tab Focus Check ke sath)
-    let sec = 30;
-    if (adTimer) clearInterval(adTimer);
-
+    // 4. Start Timer
+    if(adTimer) clearInterval(adTimer);
     adTimer = setInterval(() => {
-        // Sirf tabhi counting hogi jab user hamari site ko dekh raha hoga
-        if (!document.hidden && isAdWatching) {
-            sec--;
-            timerText.innerText = sec;
+        // Anti-Cheat: Agar user tab switch kare to timer rok do
+        if (!document.hidden) {
+            timeLeft--;
+            timerDisplay.innerText = timeLeft;
 
-            if (sec <= 0) {
+            if (timeLeft <= 0) {
                 clearInterval(adTimer);
-                isAdWatching = false;
-                giveReward(phone);
+                timerDisplay.innerHTML = '<i class="fas fa-check"></i>';
+                statusText.innerText = "Mission Accomplished!";
+                claimBtn.classList.remove('hidden'); // 30s ke baad button show
             }
         } else {
-            // Agar user ad dekh raha hai to yahan message dikha sakte hain
-            timerText.innerText = "PAUSED"; 
+            statusText.innerText = "⚠️ Timer Paused! Come back to earn.";
         }
     }, 1000);
 }
 
-function giveReward(phone) {
+function claimReward() {
+    const phone = localStorage.getItem('currentUser');
+    if(!phone) return;
+
+    // Firebase Update
     db.collection("users").doc(phone).update({
         balance: firebase.firestore.FieldValue.increment(15)
     }).then(() => {
-        loadUserData(phone);
+        loadUserData(phone); // Dashboard refresh
         document.getElementById('ad-modal').classList.add('hidden');
-        alert("🎉 Zabardast! Rs. 15 aapke account mein add ho gaye hain.");
+        document.getElementById('ad-frame').src = ""; // Clear frame
+        alert("🎉 Mubarak! Rs. 15 aapke account mein add ho gaye.");
     });
 }
 // 6. Withdraw, Share & Utilities
